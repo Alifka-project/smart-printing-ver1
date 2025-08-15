@@ -1,0 +1,70 @@
+// lib/dummy-data.ts
+import type { QuoteDetail } from "@/types";
+
+export const QUOTE_DETAILS: Record<string, QuoteDetail> = {
+  "QT-2025-0718": {
+    id: "QT-2025-0718",
+    date: "2025-07-18",
+    clientName: "Eagan Inc.",
+    client: {
+      clientType: "Company",
+      companyName: "Eagan Inc.",
+      contactPerson: "John Eagan",
+      email: "john@eagan.com",
+      phone: "501234567",
+      countryCode: "+971",
+      role: "Procurement Manager",
+    },
+    product: "Business Card",
+    quantity: 1000,
+    sides: "1",
+    printing: "Digital",
+    papers: [{ name: "BOOK", gsm: "300" }],
+    finishing: ["UV Spot", "Lamination"],
+    amounts: { base: 180, vat: 9, total: 189, status: "Approved" },
+  },
+
+  "QT-2025-0719": {
+    id: "QT-2025-0719",
+    date: "2025-07-19",
+    clientName: "Brightline Media",
+    client: {
+      clientType: "Company",
+      companyName: "Brightline Media",
+      contactPerson: "Emma White",
+      email: "emma@brightline.io",
+      phone: "6212345678",
+      countryCode: "+62",
+      role: "Brand Manager",
+    },
+    product: "Flyer A5",
+    quantity: 5000,
+    sides: "2",
+    printing: "Offset",
+    papers: [{ name: "Art Paper", gsm: "150" }],
+    finishing: ["Lamination"],
+    amounts: { base: 450, vat: 22.5, total: 472.5, status: "Pending" },
+  },
+
+  "QT-2025-0720": {
+    id: "QT-2025-0720",
+    date: "2025-07-20",
+    clientName: "Orion Books",
+    client: {
+      clientType: "Company",
+      companyName: "Orion Books",
+      contactPerson: "Liam Carter",
+      email: "liam@orionbooks.com",
+      phone: "15551234567",
+      countryCode: "+1",
+      role: "Publishing Lead",
+    },
+    product: "Book",
+    quantity: 300,
+    sides: "2",
+    printing: "Offset",
+    papers: [{ name: "HVS", gsm: "80" }],
+    finishing: ["UV Spot", "Foil Stamping"],
+    amounts: { base: 900, vat: 45, total: 945, status: "Approved" },
+  },
+};
