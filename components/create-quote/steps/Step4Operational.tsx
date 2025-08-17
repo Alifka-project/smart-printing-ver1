@@ -411,34 +411,22 @@ const Step4Operational: FC<Step4Props> = ({ formData, setFormData }) => {
               <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg p-4 flex flex-col md:flex-row gap-4 items-center">
                 {/* Visual */}
                 <div className="w-full md:w-2/3 h-56 bg-white border rounded-md p-3">
-                  <div
-                    className="w-full h-full bg-slate-50 rounded-md overflow-hidden grid"
-                    style={{
-                      gridTemplateColumns: `repeat(${Math.max(
-                        layout.nx,
-                        1
-                      )}, 1fr)`,
-                      gridTemplateRows: `repeat(${Math.max(
-                        layout.ny,
-                        1
-                      )}, 1fr)`,
-                      gap: "4px",
+                  <canvas
+                    id={`canvas-${index}`}
+                    width={400}
+                    height={300}
+                    className="w-full h-full border rounded-md"
+                    ref={(canvas) => {
+                      if (canvas && layout.itemsPerSheet > 0) {
+                        drawPrintingPattern(canvas, layout, sheetW, sheetH);
+                      }
                     }}
-                  >
-                    {Array.from({ length: layout.itemsPerSheet || 0 }).map(
-                      (_, i) => (
-                        <div
-                          key={i}
-                          className="bg-blue-200 border border-blue-400 rounded-sm"
-                        />
-                      )
-                    )}
-                    {layout.itemsPerSheet === 0 && (
-                      <div className="w-full h-full grid place-items-center text-sm text-slate-500">
-                        Set paper & product size to preview layout
-                      </div>
-                    )}
-                  </div>
+                  />
+                  {layout.itemsPerSheet === 0 && (
+                    <div className="w-full h-full grid place-items-center text-sm text-slate-500">
+                      Set paper & product size to preview layout
+                    </div>
+                  )}
                 </div>
 
                 {/* Detail */}
