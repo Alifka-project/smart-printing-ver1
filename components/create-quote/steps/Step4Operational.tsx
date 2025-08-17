@@ -71,6 +71,70 @@ function computeLayout(
   };
 }
 
+/** Draw printing pattern on canvas */
+function drawPrintingPattern(
+  canvas: HTMLCanvasElement,
+  layout: ReturnType<typeof computeLayout>,
+  sheetW: number | null,
+  sheetH: number | null
+) {
+  if (!sheetW || !sheetH || layout.itemsPerSheet === 0) return;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const canvasWidth = canvas.width;
+  const canvasHeight = canvas.height;
+  
+  // Clear canvas
+  ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+  
+  // Calculate scale factors to fit sheet on canvas
+  const scaleX = canvasWidth / sheetW;
+  const scaleY = canvasHeight / sheetH;
+  const scale = Math.min(scaleX, scaleY);
+  
+  // Calculate centered position
+  const offsetX = (canvasWidth - sheetW * scale) / 2;
+  const offsetY = (canvasHeight - sheetH * scale) / 2;
+  
+  // Draw sheet outline
+  ctx.strokeStyle = '#e5e7eb';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(offsetX, offsetY, sheetW * scale, sheetH * scale);
+  
+  // Draw usable area (with margin)
+  const margin = 0.5;
+  const usableX = offsetX + margin * scale;
+  const usableY = offsetY + margin * scale;
+  const usableWidth = (sheetW - margin * 2) * scale;
+  const usableHeight = (sheetH - margin * 2) * scale;
+  
+  ctx.strokeStyle = '#d1d5db';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(usableX, usableY, usableWidth, usableHeight);
+  
+  // Draw product rectangles
+  if (layout.nx > 0 && layout.ny > 0) {
+    const prodWidth = layout.prodWb * scale;
+    const prodHeight = layout.prodHb * scale;
+    
+    ctx.fillStyle = '#3b82f6';
+    ctx.strokeStyle = '#1d4ed8';
+    ctx.lineWidth = 1;
+    
+    for (let row = 0; row < layout.ny; row++) {
+      for (let col = 0; col < layout.nx; col++) {
+        const x = usableX + col * prodWidth;
+        const y = usableY + row * prodHeight;
+        
+        ctx.fillRect(x, y, prodWidth, prodHeight);
+        ctx.strokeRect(x, y, prodWidth, prodHeight);
+      }
+    }
+  }
+}
+
 const Step4Operational: FC<Step4Props> = ({ formData, setFormData }) => {
   const product = formData.products[0];
 
